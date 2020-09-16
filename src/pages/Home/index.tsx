@@ -13,7 +13,7 @@ interface ProductsTypes {
     title: string,
     price: number,
     image: string,
-    priceFormatted?: string
+    priceFormatted: string
 }
 
 function Home(){
