@@ -11,6 +11,7 @@ interface Product {
 interface ContextProps {
     cartItems: Array<Product>;
     addToCart(item:Product): void;
+    removeToCart(item:Product): void;
 }
 
 const CartContext = createContext<ContextProps>({} as ContextProps);
@@ -24,14 +25,25 @@ export const Cart:React.FC = ({children}) => {
         if(product !== -1){
             cartItems[product].mount! += 1;
 
-            setCartItems(cartItems);
+            setCartItems([...cartItems]);
         }else{
             setCartItems([...cartItems, {...item, mount: 1}]);
         }
-    }   
+    }
+
+    function removeToCart(item:Product){
+        const product = cartItems.findIndex(product => product.id === item.id);
+
+        if(cartItems[product].mount !== 1){
+            cartItems[product].mount! -= 1;
+
+            setCartItems([...cartItems]);
+        }
+       
+    }
 
     return (
-        <CartContext.Provider value={{cartItems, addToCart}}>
+        <CartContext.Provider value={{cartItems, addToCart, removeToCart}}>
             {children}
         </CartContext.Provider>
     );
