@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
+
+import CartContext from "../../Context/CartContext";
 
 import {Link} from "react-router-dom";
 
@@ -9,6 +11,8 @@ import Logo from "../../assets/images/logo.svg";
 import {HeaderContainer, Cart} from "./styles";
 
 function Header(){
+    const {cartItems} = useContext(CartContext);
+
     return (
         <HeaderContainer>
             <Link to="/">
@@ -18,7 +22,7 @@ function Header(){
             <Cart to="/cart">
                 <div>
                     <strong>Meu carrinho</strong>
-                    <span>3 itens</span>
+                    <span>{cartItems.length} itens</span>
                 </div>
 
                 <MdShoppingBasket size={30} color="#FFF"/>
