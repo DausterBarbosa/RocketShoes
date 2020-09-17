@@ -7,7 +7,7 @@ import {Container, TableProduct} from "./styles";
 import {MdAddCircleOutline, MdRemoveCircleOutline, MdDelete} from "react-icons/md";
 
 function Carrinho(){
-    const {cartItems, addToCart, removeToCart} = useContext(CartContext);
+    const {cartItems, addToCart, removeToCart, deleteToCart} = useContext(CartContext);
 
     return (<Container>
         <TableProduct>
@@ -45,7 +45,7 @@ function Carrinho(){
                         <strong>R$155,90</strong>
                     </td>
                     <td>
-                        <button>
+                        <button type="button" onClick={() => deleteToCart(product)}>
                             <MdDelete color="#7159c1" size={20}/>
                         </button>
                     </td>

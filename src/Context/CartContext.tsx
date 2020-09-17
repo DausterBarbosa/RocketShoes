@@ -12,6 +12,7 @@ interface ContextProps {
     cartItems: Array<Product>;
     addToCart(item:Product): void;
     removeToCart(item:Product): void;
+    deleteToCart(item:Product): void;
 }
 
 const CartContext = createContext<ContextProps>({} as ContextProps);
@@ -42,8 +43,16 @@ export const Cart:React.FC = ({children}) => {
        
     }
 
+    function deleteToCart(item:Product){
+        const product = cartItems.findIndex(product => product.id === item.id);
+
+        cartItems.splice(product, 1);
+        
+        setCartItems([...cartItems]);
+    }
+
     return (
-        <CartContext.Provider value={{cartItems, addToCart, removeToCart}}>
+        <CartContext.Provider value={{cartItems, addToCart, removeToCart, deleteToCart}}>
             {children}
         </CartContext.Provider>
     );
