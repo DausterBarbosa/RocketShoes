@@ -19,10 +19,12 @@ export const Cart:React.FC = ({children}) => {
     const [cartItems, setCartItems] = useState<Array<Product>>([]);
 
     function addToCart(item:Product){
-        const product = cartItems.find(product => product.id === item.id);
+        const product = cartItems.findIndex(product => product.id === item.id);
 
-        if(product){
-            const mount = product?.mount ? product.mount += 1 : undefined;
+        if(product !== -1){
+            cartItems[product].mount! += 1;
+
+            setCartItems(cartItems);
         }else{
             setCartItems([...cartItems, {...item, mount: 1}]);
         }
