@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+
+import CartContext from "../../Context/CartContext";
 
 import Api from "../../services/api";
 
@@ -17,6 +19,8 @@ interface ProductsTypes {
 }
 
 function Home(){
+    const {addToCart} = useContext(CartContext);
+
     const [products, setProducts] = useState<ProductsTypes[]>([]);
 
     useEffect(() => {
@@ -35,7 +39,6 @@ function Home(){
     }, []);
 
     return (
-        (console.log(products)),
         <ProductList>
             {products.map(product => (
                 <li key={product.id}>
@@ -45,7 +48,7 @@ function Home(){
                 />
                 <strong>{product.title}</strong>
                 <span>{product.priceFormatted}</span>
-                <button>
+                <button type="button" onClick={() => addToCart(product)}>
                     <div>
                         <MdAddShoppingCart size={16} color="#FFF"/>
                         <span>3</span>

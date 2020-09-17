@@ -1,10 +1,14 @@
-import React from "react";
+import React, {useContext} from "react";
+
+import CartContext from "../../Context/CartContext";
 
 import {Container, TableProduct} from "./styles";
 
 import {MdAddCircleOutline, MdRemoveCircleOutline, MdDelete} from "react-icons/md";
 
 function Carrinho(){
+    const {cartItems} = useContext(CartContext);
+
     return (<Container>
         <TableProduct>
             <thead>
@@ -17,20 +21,21 @@ function Carrinho(){
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                {cartItems.map(product => (
+                    <tr key={product.id}>
                     <td>
-                        <img src="https://static.netshoes.com.br/produtos/tenis-de-caminhada-leve-confortavel/06/E74-0492-006/E74-0492-006_zoom2.jpg?ts=1586961574&ims=326x" alt="tenis"/>
+                        <img src={product.image} alt={product.title}/>
                     </td>
                     <td>
-                        <strong>Tênis muito massa</strong>
-                        <span>R$122,80</span>
+                    <strong>{product.title}</strong>
+                    <span>{product.price}</span>
                     </td>
                     <td>
                         <div>
                             <button>
                                 <MdAddCircleOutline color="#7159c1" size={20}/>
                             </button>
-                            <input type="nuber" readOnly value={2}/>
+                            <input type="nuber" readOnly value={product.mount}/>
                             <button>
                                 <MdRemoveCircleOutline color="#7159c1" size={20}/>
                             </button>
@@ -45,6 +50,7 @@ function Carrinho(){
                         </button>
                     </td>
                 </tr>
+                ))}
             </tbody>
         </TableProduct>
         <footer>
