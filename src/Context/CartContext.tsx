@@ -5,6 +5,7 @@ interface Product {
     title: string;
     price: number;
     image: string;
+    priceFormatted: string;
     mount?: number;
 }
 
@@ -21,6 +22,7 @@ export const Cart:React.FC = ({children}) => {
     const [cartItems, setCartItems] = useState<Array<Product>>([]);
 
     function addToCart(item:Product){
+        console.log(item);
         const product = cartItems.findIndex(product => product.id === item.id);
 
         if(product !== -1){
