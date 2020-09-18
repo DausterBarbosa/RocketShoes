@@ -18,10 +18,28 @@ interface ProductsTypes {
     priceFormatted: string
 }
 
+interface MountItems {
+    [number:string]: number;
+}
+
 function Home(){
-    const {addToCart} = useContext(CartContext);
+    const {addToCart, cartItems} = useContext(CartContext);
 
     const [products, setProducts] = useState<ProductsTypes[]>([]);
+    const [mountItems, setMountItems] = useState<MountItems>({});
+
+    useEffect(() => {
+        function getMountsItems(){
+            const mounts = cartItems.reduce((map, item) => ({
+                ...map,
+                [item.id]: item.mount
+            }), {});
+    
+            setMountItems(mounts);
+        }
+
+        getMountsItems();
+    }, [cartItems]);
 
     useEffect(() => {
         async function getProducts(){
@@ -51,7 +69,7 @@ function Home(){
                 <button type="button" onClick={() => addToCart(product)}>
                     <div>
                         <MdAddShoppingCart size={16} color="#FFF"/>
-                        <span>3</span>
+                    <span>{mountItems[product.id] || 0}</span>
                     </div>
                     <span>ADICIONAR AO CARRINHO</span>
                 </button>
