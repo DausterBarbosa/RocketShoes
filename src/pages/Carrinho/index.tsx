@@ -10,17 +10,18 @@ import {MdAddCircleOutline, MdRemoveCircleOutline, MdDelete} from "react-icons/m
 
 function Carrinho(){
     const {cartItems, addToCart, removeToCart, deleteToCart} = useContext(CartContext);
+    
     const [total, setTotal] = useState("R$ 0,00");
 
-    function calculateTotal(){
-        const calculateTotal = cartItems.reduce((accumulator, currentValue) => {
-            return accumulator + (currentValue.mount! * currentValue.price);
-        }, 0);
-
-        setTotal(formatPrice(calculateTotal));
-    }
-
     useEffect(() => {
+        function calculateTotal(){
+            const calculateTotal = cartItems.reduce((accumulator, currentValue) => {
+                return accumulator + (currentValue.mount! * currentValue.price);
+            }, 0);
+    
+            setTotal(formatPrice(calculateTotal));
+        }
+
         calculateTotal();
     }, [cartItems]);
 
