@@ -42,7 +42,7 @@ function Carrinho(){
                         </div>
                     </td>
                     <td>
-                        <strong>R$155,90</strong>
+                        <strong>{product.subtotal}</strong>
                     </td>
                     <td>
                         <button type="button" onClick={() => deleteToCart(product)}>

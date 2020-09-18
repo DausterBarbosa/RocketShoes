@@ -1,12 +1,15 @@
 import React, {createContext, useState} from "react";
 
+import {formatPrice} from "../utils/format";
+
 interface Product {
     id: number;
     title: string;
     price: number;
-    image: string;
     priceFormatted: string;
+    image: string;
     mount?: number;
+    subtotal?: string;
 }
 
 interface ContextProps {
@@ -22,15 +25,18 @@ export const Cart:React.FC = ({children}) => {
     const [cartItems, setCartItems] = useState<Array<Product>>([]);
 
     function addToCart(item:Product){
-        console.log(item);
         const product = cartItems.findIndex(product => product.id === item.id);
 
         if(product !== -1){
             cartItems[product].mount! += 1;
 
+            cartItems[product].subtotal = formatPrice(cartItems[product].mount! * cartItems[product].price);
+
             setCartItems([...cartItems]);
         }else{
-            setCartItems([...cartItems, {...item, mount: 1}]);
+            const subtotal = formatPrice(item.price);
+
+            setCartItems([...cartItems, {...item, mount: 1, subtotal}]);
         }
     }
 
@@ -39,6 +45,8 @@ export const Cart:React.FC = ({children}) => {
 
         if(cartItems[product].mount !== 1){
             cartItems[product].mount! -= 1;
+
+            cartItems[product].subtotal = formatPrice(cartItems[product].mount! * cartItems[product].price);
 
             setCartItems([...cartItems]);
         }
