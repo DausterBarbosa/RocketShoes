@@ -1,4 +1,6 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
+
+import {formatPrice} from "../../utils/format";
 
 import CartContext from "../../Context/CartContext";
 
@@ -8,6 +10,19 @@ import {MdAddCircleOutline, MdRemoveCircleOutline, MdDelete} from "react-icons/m
 
 function Carrinho(){
     const {cartItems, addToCart, removeToCart, deleteToCart} = useContext(CartContext);
+    const [total, setTotal] = useState("R$ 0,00");
+
+    function calculateTotal(){
+        const calculateTotal = cartItems.reduce((accumulator, currentValue) => {
+            return accumulator + (currentValue.mount! * currentValue.price);
+        }, 0);
+
+        setTotal(formatPrice(calculateTotal));
+    }
+
+    useEffect(() => {
+        calculateTotal();
+    }, [cartItems]);
 
     return (<Container>
         <TableProduct>
@@ -60,7 +75,7 @@ function Carrinho(){
 
             <div>
                 <span>total</span>
-                <strong>R$1234,90</strong>
+                <strong>{total}</strong>
             </div>
         </footer>
     </Container>);
