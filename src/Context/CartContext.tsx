@@ -1,5 +1,9 @@
 import React, {createContext, useState} from "react";
 
+import {toast} from "react-toastify";
+
+import Api from "../services/api";
+
 import {formatPrice} from "../utils/format";
 
 interface Product {
@@ -24,19 +28,31 @@ const CartContext = createContext<ContextProps>({} as ContextProps);
 export const Cart:React.FC = ({children}) => {
     const [cartItems, setCartItems] = useState<Array<Product>>([]);
 
-    function addToCart(item:Product){
+    async function addToCart(item:Product){
         const product = cartItems.findIndex(product => product.id === item.id);
 
         if(product !== -1){
-            cartItems[product].mount! += 1;
+            const {data} = await Api.get(`/stock/${item.id}`);
 
-            cartItems[product].subtotal = formatPrice(cartItems[product].mount! * cartItems[product].price);
+            if(cartItems[product].mount! + 1 > data.amount){
+                toast.error("Quantidade solicitada fora de estoque.");
+            }else{
+                cartItems[product].mount! += 1;
 
-            setCartItems([...cartItems]);
+                cartItems[product].subtotal = formatPrice(cartItems[product].mount! * cartItems[product].price);
+
+                setCartItems([...cartItems]);
+            }
         }else{
-            const subtotal = formatPrice(item.price);
+            const {data} = await Api.get(`/stock/${item.id}`);
 
-            setCartItems([...cartItems, {...item, mount: 1, subtotal}]);
+            if(data.amount < 1){
+                toast.error("Quantidade solicitada fora de estoque.");
+            }else{
+                const subtotal = formatPrice(item.price);
+
+                setCartItems([...cartItems, {...item, mount: 1, subtotal}]);
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
 
+import {ToastContainer} from "react-toastify"
+
 import {Cart} from "./Context/CartContext"
 
 import GlobalStyles from "./assets/styles/global";
@@ -14,6 +16,7 @@ function App(){
         <BrowserRouter>
             <GlobalStyles/>
             <Cart>
+                <ToastContainer autoClose={3000}/>
                 <Header/>
                 <Routes/>
             </Cart>
