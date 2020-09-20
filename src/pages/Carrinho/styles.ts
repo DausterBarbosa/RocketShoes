@@ -93,3 +93,12 @@ export const TableProduct = styled.table`
         padding: 6px;
     }
 `;
+
+export const CartEmpty = styled.div`
+    width: 100%;
+    text-align: center;
+
+    strong{
+        font-size: 30px;
+    }
+`;
