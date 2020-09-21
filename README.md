@@ -16,6 +16,7 @@
   <li>Json-Server (Para simular API)</li>
 </ul>
 <h2>Como executar o projeto:</h2>
+
 ```
 #Clone o repostiório
 $ git clone https://github.com/DausterBarbosa/RocketShoes.git
