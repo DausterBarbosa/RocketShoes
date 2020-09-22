@@ -25,7 +25,7 @@ $ git clone https://github.com/DausterBarbosa/RocketShoes.git
 $ cd RocketShoes
 
 #Instale as dependências
-$ yarn install
+$ yarn
 
 #Inicie a aplicação
 $ yarn start
