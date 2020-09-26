@@ -30,3 +30,14 @@ $ yarn
 #Inicie a aplicação
 $ yarn start
 ```
+
+<h2>Como executar o Json-Server:</h2>
+<p>Json-Server está sendo usado para simular uma API.</p>
+
+```
+#Vá para a pasta da aplicação
+$ cd RocketShoes
+
+#Inicie o servidor
+$ json-server database.json
+```
